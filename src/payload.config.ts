@@ -7,6 +7,7 @@ import sharp from 'sharp'
 
 import { Accounts } from './collections/Accounts'
 import { Apartments } from './collections/Apartments'
+import { Markets } from './collections/Markets'
 import { SearchLocations } from './collections/SearchLocations'
 import { Users } from './collections/Users'
 
@@ -20,7 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Accounts, Apartments, SearchLocations, Users],
+  collections: [Accounts, Apartments, Markets, SearchLocations, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     accounts: Account;
     apartments: Apartment;
+    markets: Market;
     searchLocations: SearchLocation;
     'users-payload': UsersPayload;
     'payload-kv': PayloadKv;
@@ -80,6 +81,7 @@ export interface Config {
   collectionsSelect: {
     accounts: AccountsSelect<false> | AccountsSelect<true>;
     apartments: ApartmentsSelect<false> | ApartmentsSelect<true>;
+    markets: MarketsSelect<false> | MarketsSelect<true>;
     searchLocations: SearchLocationsSelect<false> | SearchLocationsSelect<true>;
     'users-payload': UsersPayloadSelect<false> | UsersPayloadSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -255,6 +257,24 @@ export interface Apartment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "markets".
+ */
+export interface Market {
+  id: string;
+  /**
+   * Combined market, submarket and state (auto-set)
+   */
+  name?: string | null;
+  market?: string | null;
+  submarket?: string | null;
+  account?: string | null;
+  state?: string | null;
+  location?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "searchLocations".
  */
 export interface SearchLocation {
@@ -342,6 +362,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'apartments';
         value: string | Apartment;
+      } | null)
+    | ({
+        relationTo: 'markets';
+        value: string | Market;
       } | null)
     | ({
         relationTo: 'searchLocations';
@@ -437,6 +461,20 @@ export interface ApartmentsSelect<T extends boolean = true> {
   geojson?: T;
   marketingWebsiteUrl?: T;
   prospectPhoneNumber?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "markets_select".
+ */
+export interface MarketsSelect<T extends boolean = true> {
+  name?: T;
+  market?: T;
+  submarket?: T;
+  account?: T;
+  state?: T;
+  location?: T;
   updatedAt?: T;
   createdAt?: T;
 }
