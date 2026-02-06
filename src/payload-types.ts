@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     accounts: Account;
+    apartments: Apartment;
     'users-payload': UsersPayload;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -77,6 +78,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     accounts: AccountsSelect<false> | AccountsSelect<true>;
+    apartments: ApartmentsSelect<false> | ApartmentsSelect<true>;
     'users-payload': UsersPayloadSelect<false> | UsersPayloadSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -136,6 +138,27 @@ export interface Account {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apartments".
+ */
+export interface Apartment {
+  id: string;
+  /**
+   * Name or identifier for the apartment
+   */
+  name: string;
+  /**
+   * Account that owns or is associated with this apartment
+   */
+  accountId: string | Account;
+  /**
+   * Account (text)
+   */
+  account?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users-payload".
  */
 export interface UsersPayload {
@@ -186,6 +209,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'accounts';
         value: string | Account;
+      } | null)
+    | ({
+        relationTo: 'apartments';
+        value: string | Apartment;
       } | null)
     | ({
         relationTo: 'users-payload';
@@ -241,6 +268,17 @@ export interface AccountsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   publicId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "apartments_select".
+ */
+export interface ApartmentsSelect<T extends boolean = true> {
+  name?: T;
+  accountId?: T;
+  account?: T;
   updatedAt?: T;
   createdAt?: T;
 }
