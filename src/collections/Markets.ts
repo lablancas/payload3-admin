@@ -51,6 +51,15 @@ export const Markets: CollectionConfig = {
       label: 'Account',
     },
     {
+      name: 'accountId',
+      type: 'relationship',
+      relationTo: 'accounts',
+      label: 'Account',
+      admin: {
+        description: 'Account (relationship)',
+      },
+    },
+    {
       name: 'state',
       type: 'text',
       label: 'State',

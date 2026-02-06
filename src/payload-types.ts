@@ -268,6 +268,10 @@ export interface Market {
   market?: string | null;
   submarket?: string | null;
   account?: string | null;
+  /**
+   * Account (relationship)
+   */
+  accountId?: (string | null) | Account;
   state?: string | null;
   location?: string | null;
   updatedAt: string;
@@ -473,6 +477,7 @@ export interface MarketsSelect<T extends boolean = true> {
   market?: T;
   submarket?: T;
   account?: T;
+  accountId?: T;
   state?: T;
   location?: T;
   updatedAt?: T;
