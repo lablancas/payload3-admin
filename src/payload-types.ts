@@ -133,6 +133,10 @@ export interface Account {
    * Public-facing identifier (e.g. for APIs or URLs)
    */
   publicId: string;
+  /**
+   * When enabled, posts are automatically approved
+   */
+  autoApprove?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -358,6 +362,7 @@ export interface AccountsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   publicId?: T;
+  autoApprove?: T;
   updatedAt?: T;
   createdAt?: T;
 }

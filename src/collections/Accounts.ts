@@ -40,6 +40,15 @@ export const Accounts: CollectionConfig = {
         description: 'Public-facing identifier (e.g. for APIs or URLs)',
       },
     },
+    {
+      name: 'autoApprove',
+      type: 'checkbox',
+      label: 'Auto Approve',
+      defaultValue: false,
+      admin: {
+        description: 'When enabled, posts are automatically approved',
+      },
+    },
   ],
   timestamps: true,
 }
