@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    accounts: Account;
     'users-payload': UsersPayload;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +76,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    accounts: AccountsSelect<false> | AccountsSelect<true>;
     'users-payload': UsersPayloadSelect<false> | UsersPayloadSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -111,6 +113,26 @@ export interface UsersPayloadAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts".
+ */
+export interface Account {
+  /**
+   * Unique text identifier for the account
+   */
+  id: string;
+  /**
+   * Display name for the account
+   */
+  name: string;
+  /**
+   * Public-facing identifier (e.g. for APIs or URLs)
+   */
+  publicId: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -160,10 +182,15 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: string;
-  document?: {
-    relationTo: 'users-payload';
-    value: string | UsersPayload;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'accounts';
+        value: string | Account;
+      } | null)
+    | ({
+        relationTo: 'users-payload';
+        value: string | UsersPayload;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users-payload';
@@ -205,6 +232,17 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "accounts_select".
+ */
+export interface AccountsSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  publicId?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
