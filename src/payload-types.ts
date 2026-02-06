@@ -146,6 +146,64 @@ export interface Apartment {
    * Name or identifier for the apartment
    */
   name: string;
+  status: 'draft' | 'published' | 'archived';
+  type?: ('singleFamily' | 'multiFamily' | 'student' | 'military' | 'affordable' | 'senior') | null;
+  housingType?: ('apartment' | 'penthouse' | 'duplex' | 'townhome') | null;
+  enabledFeatures?: ('search' | 'seo' | 'ppc' | 'microsite' | 'designAssistant')[] | null;
+  /**
+   * IANA time zone (e.g. America/New_York)
+   */
+  timeZone?:
+    | (
+        | 'Pacific/Midway'
+        | 'Pacific/Niue'
+        | 'Pacific/Honolulu'
+        | 'Pacific/Rarotonga'
+        | 'America/Anchorage'
+        | 'Pacific/Gambier'
+        | 'America/Los_Angeles'
+        | 'America/Tijuana'
+        | 'America/Denver'
+        | 'America/Phoenix'
+        | 'America/Chicago'
+        | 'America/Guatemala'
+        | 'America/New_York'
+        | 'America/Bogota'
+        | 'America/Caracas'
+        | 'America/Santiago'
+        | 'America/Buenos_Aires'
+        | 'America/Sao_Paulo'
+        | 'Atlantic/South_Georgia'
+        | 'Atlantic/Azores'
+        | 'Atlantic/Cape_Verde'
+        | 'Europe/London'
+        | 'Europe/Berlin'
+        | 'Africa/Lagos'
+        | 'Europe/Athens'
+        | 'Africa/Cairo'
+        | 'Europe/Moscow'
+        | 'Asia/Riyadh'
+        | 'Asia/Dubai'
+        | 'Asia/Baku'
+        | 'Asia/Karachi'
+        | 'Asia/Tashkent'
+        | 'Asia/Calcutta'
+        | 'Asia/Dhaka'
+        | 'Asia/Almaty'
+        | 'Asia/Jakarta'
+        | 'Asia/Bangkok'
+        | 'Asia/Shanghai'
+        | 'Asia/Singapore'
+        | 'Asia/Tokyo'
+        | 'Asia/Seoul'
+        | 'Australia/Brisbane'
+        | 'Australia/Sydney'
+        | 'Pacific/Guam'
+        | 'Pacific/Noumea'
+        | 'Pacific/Auckland'
+        | 'Pacific/Fiji'
+      )
+    | null;
   /**
    * Account that owns or is associated with this apartment
    */
@@ -154,6 +212,38 @@ export interface Apartment {
    * Account (text)
    */
   account?: string | null;
+  address?: {
+    line1?: string | null;
+    line2?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postalCode?: string | null;
+    country?: string | null;
+  };
+  coordinates?: {
+    lat?: number | null;
+    lng?: number | null;
+  };
+  /**
+   * GeoJSON Point: { "type": "Point", "coordinates": [longitude, latitude] }
+   */
+  geojson?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * URL of the marketing website
+   */
+  marketingWebsiteUrl?: string | null;
+  /**
+   * Phone number for prospects
+   */
+  prospectPhoneNumber?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -277,8 +367,32 @@ export interface AccountsSelect<T extends boolean = true> {
  */
 export interface ApartmentsSelect<T extends boolean = true> {
   name?: T;
+  status?: T;
+  type?: T;
+  housingType?: T;
+  enabledFeatures?: T;
+  timeZone?: T;
   accountId?: T;
   account?: T;
+  address?:
+    | T
+    | {
+        line1?: T;
+        line2?: T;
+        city?: T;
+        state?: T;
+        postalCode?: T;
+        country?: T;
+      };
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  geojson?: T;
+  marketingWebsiteUrl?: T;
+  prospectPhoneNumber?: T;
   updatedAt?: T;
   createdAt?: T;
 }
