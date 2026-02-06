@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     accounts: Account;
     apartments: Apartment;
+    searchLocations: SearchLocation;
     'users-payload': UsersPayload;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsSelect: {
     accounts: AccountsSelect<false> | AccountsSelect<true>;
     apartments: ApartmentsSelect<false> | ApartmentsSelect<true>;
+    searchLocations: SearchLocationsSelect<false> | SearchLocationsSelect<true>;
     'users-payload': UsersPayloadSelect<false> | UsersPayloadSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -253,6 +255,39 @@ export interface Apartment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "searchLocations".
+ */
+export interface SearchLocation {
+  id: string;
+  /**
+   * ID of the parent search location
+   */
+  parentId?: number | null;
+  /**
+   * Location type (e.g. State, City)
+   */
+  type: string;
+  /**
+   * Name of the search location
+   */
+  name: string;
+  /**
+   * Canonical full name (e.g. California, United States)
+   */
+  canonicalName?: string | null;
+  /**
+   * Country code (e.g. US)
+   */
+  country?: string | null;
+  /**
+   * Public identifier
+   */
+  publicId: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users-payload".
  */
 export interface UsersPayload {
@@ -307,6 +342,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'apartments';
         value: string | Apartment;
+      } | null)
+    | ({
+        relationTo: 'searchLocations';
+        value: string | SearchLocation;
       } | null)
     | ({
         relationTo: 'users-payload';
@@ -398,6 +437,20 @@ export interface ApartmentsSelect<T extends boolean = true> {
   geojson?: T;
   marketingWebsiteUrl?: T;
   prospectPhoneNumber?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "searchLocations_select".
+ */
+export interface SearchLocationsSelect<T extends boolean = true> {
+  parentId?: T;
+  type?: T;
+  name?: T;
+  canonicalName?: T;
+  country?: T;
+  publicId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
